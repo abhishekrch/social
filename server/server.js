@@ -17,6 +17,6 @@ app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URI)
 
-app.use('/api/routes', authRoutes);
+app.use('/api/auth', authRoutes);
 
 app.listen(5000);
