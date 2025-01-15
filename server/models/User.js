@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 6
       },
+    friends: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }]
 })
 
 userSchema.pre('save', async function(next) {

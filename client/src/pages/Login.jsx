@@ -3,11 +3,13 @@ import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { LogIn } from "lucide-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ function Login() {
       );
       login(response.data.user, response.data.token);
       toast.success("Login Successful");
+      navigate('/');
     } catch (error) {
       toast.error(error.response?.data?.message || "Login Failed");
     }
