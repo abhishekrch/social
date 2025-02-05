@@ -90,4 +90,23 @@ router.post('/accept/:userId', async (req, res) => {
       res.status(500).json({ message: 'Failed to reject friend request' });
     }
   });
+
+  router.delete('/:friendId', async (req, res) => {
+    try {
+      const { friendId } = req.params;
+      
+      await User.findByIdAndUpdate(req.user._id, {
+        $pull: { friends: friendId }
+      });
+  
+      await User.findByIdAndUpdate(friendId, {
+        $pull: { friends: req.user._id }
+      });
+  
+      res.json({ message: 'Friend removed' });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to remove friend' });
+    }
+  });
+  
   
