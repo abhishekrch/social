@@ -28,4 +28,33 @@ function Home() {
           }      
     }
 
+    const fetchRecommendations = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/friends/recommendations`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      );
+      setRecommendations(response.data);
+    } catch (error) {
+      toast.error('Failed to fetch recommendations');
+    }
+  };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/users/search?q=${searchTerm}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      );
+      setUsers(response.data);
+    } catch (error) {
+      toast.error('Search failed');
+    }
+  };
+
 }
